@@ -7,8 +7,10 @@ from nn import Parameter
 
 class BaseOptimizer(ABC):
     def __init__(self, parameters: Sequence[Parameter], lr: float):
-        self.parameters = list(parameters)
+        if lr <= 0:
+            raise ValueError("learning rate must be positive")
         self.learning_rate = lr
+        self.parameters = list(parameters)
 
     @abstractmethod
     def step(self):
